@@ -1,0 +1,14 @@
+# Ignore sensitive PHP config files
+config.php
+*.env
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore XAMPP/MySQL database files
+*.db
+*.sql
+
+# Ignore PHP/IDE temporary files
+*.log
+*.cache
