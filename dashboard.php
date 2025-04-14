@@ -25,28 +25,12 @@ $total_sales = $stmt->fetch()['total_sales'] ?? 0;
     <link rel="stylesheet" href="styles.css?v=<?php echo filemtime('styles.css'); ?>">
 </head>
 <body>
-    <div class="top-bar">
-        <span>Welcome, <?php echo $_SESSION['username']; ?> (<?php echo $role; ?>)</span>
-        <a href="logout.php" class="orange-btn">Logout</a>
-    </div>
     <div class="container">
-        <div class="sidebar">
-            <h3>Menu</h3>
-            <a href="dashboard.php" class="orange-btn <?php echo basename($_SERVER['PHP_SELF']) === 'dashboard.php' ? 'active' : ''; ?>">Dashboard</a>
-            <a href="sell.php" class="orange-btn <?php echo basename($_SERVER['PHP_SELF']) === 'sell.php' ? 'active' : ''; ?>">Sell Products</a>
-            <a href="inventory.php" class="orange-btn <?php echo basename($_SERVER['PHP_SELF']) === 'inventory.php' ? 'active' : ''; ?>">Manage Inventory</a>
-            <?php if ($role === 'admin'): ?>
-                <a href="users.php" class="orange-btn <?php echo basename($_SERVER['PHP_SELF']) === 'users.php' ? 'active' : ''; ?>">Manage Users</a>
-            <?php endif; ?>
-            <h3>Reports</h3>
-            <a href="reports.php?period=daily" class="orange-btn <?php echo isset($_GET['period']) && $_GET['period'] === 'daily' ? 'active' : ''; ?>">Daily Report</a>
-            <a href="reports.php?period=weekly" class="orange-btn <?php echo isset($_GET['period']) && $_GET['period'] === 'weekly' ? 'active' : ''; ?>">Weekly Report</a>
-            <a href="reports.php?period=monthly" class="orange-btn <?php echo isset($_GET['period']) && $_GET['period'] === 'monthly' ? 'active' : ''; ?>">Monthly Report</a>
-            <a href="reports.php?period=yearly" class="orange-btn <?php echo isset($_GET['period']) && $_GET['period'] === 'yearly' ? 'active' : ''; ?>">Yearly Report</a>
-        </div>
+        <i class="fas fa-bars hamburger" onclick="toggleSidebar()"></i>
+        <?php include 'includes/sidebar.php'; ?>
         <div class="main-content">
             <h1>Dashboard</h1>
-            <p class="dashboard-welcome">Welcome back, <?php echo $_SESSION['username']; ?>! Here's your overview:</p>
+            <p class="dashboard-welcome">Welcome back, <?php echo htmlspecialchars($_SESSION['username']); ?>! Here's your overview:</p>
             <div class="summary-box">
                 <h3>General Stats</h3>
                 <p>Total Products: <?php echo $total_products; ?></p>

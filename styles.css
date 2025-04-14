@@ -20,12 +20,12 @@ body {
 }
 
 .orange-btn:hover {
-    background-color: #CC5500; /* New hover: Burnt Orange */
-    color: white; /* Keep white text for readability */
+    background-color: #CC5500;
+    color: white;
 }
 
 .orange-btn.active {
-    background-color: #CC5500; /* Match hover for consistency */
+    background-color: #CC5500;
     color: white;
     font-weight: bold;
 }
@@ -90,11 +90,11 @@ body {
 }
 
 .login-form .orange-btn:hover {
-    background-color: #CC5500; /* Match general hover */
+    background-color: #CC5500;
     color: white;
 }
 
-/* Product Row (Legacy Styling - Kept for Compatibility) */
+/* Product Row (Legacy Styling) */
 .product-row {
     display: flex;
     align-items: center;
@@ -119,35 +119,34 @@ body {
 .remove-btn {
     padding: 8px 15px;
     font-size: 14px;
-    background-color: #ff4444; /* Red for remove buttons */
+    background-color: #ff4444;
 }
 
 .remove-btn:hover {
     background-color: #cc0000;
 }
 
-/* Top Bar */
-div.top-bar {
-    background: #FF6200;
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
 /* Container */
 .container {
     display: flex;
-    min-height: calc(100vh - 60px);
+    min-height: 100vh;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 /* Sidebar */
 .sidebar {
     width: 250px;
-    background: #fff;
+    background: #ffffff;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    order: 1;
+    transition: all 0.3s ease;
 }
 
 .sidebar h3 {
@@ -163,6 +162,75 @@ div.top-bar {
     box-sizing: border-box;
 }
 
+.orange-btn i {
+    margin-right: 10px;
+}
+
+/* Reports Toggle */
+.reports-toggle {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    margin: 5px 0;
+}
+
+.reports-toggle:hover {
+    color: #CC5500;
+}
+
+.reports-menu {
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.reports-btn {
+    margin-left: 15px;
+    width: calc(100% - 15px);
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    font-size: 24px;
+    color: #FF6200;
+    cursor: pointer;
+    margin: 15px;
+}
+
+/* Sidebar Icons (Collapsed Strip) */
+.sidebar-icons {
+    display: none;
+    width: 50px;
+    background: #ffffff;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    order: 1;
+    text-align: center;
+}
+
+.icon-btn {
+    display: block;
+    color: #FF6200;
+    font-size: 20px;
+    margin: 20px auto;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.icon-btn:hover {
+    color: #CC5500;
+}
+
+.icon-btn.active {
+    color: #CC5500;
+}
+
 /* Main Content */
 .main-content {
     flex-grow: 1;
@@ -172,6 +240,7 @@ div.top-bar {
     margin: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     overflow-x: auto;
+    order: 2;
 }
 
 .dashboard-welcome {
@@ -277,15 +346,20 @@ tr:hover {
     margin-bottom: 15px;
 }
 
+.receipt-box p {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
 .receipt-box hr {
     border: none;
     border-top: 1px dashed #ccc;
-    margin: 15px 0;
+    margin: 10px 0;
 }
 
-.receipt-box p {
-    margin: 10px 0;
-    font-size: 16px;
+.receipt-box .orange-btn {
+    margin: 5px;
+    padding: 10px 20px;
 }
 
 .receipt-logo {
@@ -293,187 +367,122 @@ tr:hover {
     margin-bottom: 15px;
 }
 
-/* Messages */
-.error { color: red; font-weight: bold; }
-.success { color: green; font-weight: bold; }
-
-@media print {
-    .container > *:not(.receipt-box), .orange-btn:not(.receipt-box .orange-btn) {
-        display: none;
-    }
-    .receipt-box {
-        border: none;
-        box-shadow: none;
-        margin: 0;
-        width: 100%;
-    }
-}
-
-/* Search Form */
-.search-form {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.search-input {
-    width: 100%;
-    max-width: 400px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-/* Add Stock Form */
-.add-stock-form {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.stock-input {
-    width: 60px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-.add-stock-form .orange-btn {
-    padding: 8px 15px;
-    font-size: 14px;
-}
-
-/* Reset Form */
-.reset-form {
+/* Form Styles */
+.add-product-form,
+.add-user-form,
+.add-stock-form,
+.delete-form,
+.reset-password-form,
+.logo-form {
     margin: 20px 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
+.add-product-form input,
+.add-user-form input,
+.add-user-form select,
+.add-stock-form input,
+.reset-password-form input {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+.add-stock-form input[type="number"] {
+    width: 100px;
+}
+
+.reset-password-form input[type="password"] {
+    width: 150px;
+}
+
+.logo-form input[type="file"] {
+    padding: 8px;
+}
+
+/* Search Input */
+.search-input,
+.product-input,
+.stock-input {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+/* Error and Success Messages */
+.error {
+    color: #ff4444;
+    margin: 10px 0;
+}
+
+.success {
+    color: #28a745;
+    margin: 10px 0;
+}
+
+/* Responsive Table */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Reset Button */
 .reset-btn {
-    background-color: #FF0000;
+    background-color: #ff4444;
 }
 
 .reset-btn:hover {
-    background-color: #CC0000;
+    background-color: #cc0000;
 }
 
-/* Delete Form */
-.delete-form {
-    display: inline;
-}
-
-.delete-form .orange-btn {
-    padding: 8px 15px;
-    font-size: 14px;
-}
-
-/* Add Product Form */
-.add-product-form {
-    margin: 20px 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-}
-
-.add-product-form h3 {
-    width: 100%;
-    color: #FF6200;
-    margin-bottom: 10px;
-}
-
-.product-input {
-    width: 100%;
-    max-width: 200px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-/* Add User Form */
-.add-user-form {
-    margin: 20px 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-}
-
-.add-user-form h3 {
-    width: 100%;
-    color: #FF6200;
-    margin-bottom: 10px;
-}
-
-.user-input {
-    width: 100%;
-    max-width: 200px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-/* Edit User Form */
-.edit-user-form {
-    display: flex;
-    gap: 5px;
-    align-items: center;
-}
-
+/* Small Input */
 .small-input {
-    max-width: 150px;
+    width: 100px;
+    padding: 8px;
+    margin: 5px 0;
 }
 
-/* Reset Password Form */
-.reset-password-form {
-    display: inline-flex;
-    gap: 5px;
-    align-items: center;
-    margin-left: 10px;
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .sidebar {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 1000;
+    }
+
+    .sidebar-icons {
+        display: none;
+    }
+
+    .main-content {
+        margin: 10px;
+        padding: 15px;
+    }
 }
 
-/* Logo Upload Form */
-.logo-upload-form {
-    margin: 20px 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-}
+@media (min-width: 769px) {
+    .hamburger {
+        display: block;
+    }
 
-.logo-upload-form h3 {
-    width: 100%;
-    color: #FF6200;
-    margin-bottom: 10px;
-}
+    .sidebar {
+        display: block;
+    }
 
-.logo-upload-form input[type="file"] {
-    padding: 5px;
-}
-
-.logo-upload-form p {
-    width: 100%;
-    color: #666;
-    font-size: 14px;
-}
-
-/* Updated Receipt Logo Styling */
-.receipt-logo {
-    max-width: 100px;
-    height: auto;
-    margin-bottom: 15px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    .main-content {
+        margin-left: 50px;
+    }
 }
