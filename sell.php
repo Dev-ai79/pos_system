@@ -28,6 +28,7 @@ try {
     <title>Sell Products - POS System</title>
     <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         .table-wrapper {
             display: block;
@@ -231,7 +232,7 @@ try {
                         </tbody>
                     </table>
                 </div>
-                <button type="button" class="orange-btn" onclick="addProductRow()">Add Product</button>
+                <button type="button" class="orange-btn add-product-btn" onclick="addProductRow()">Add Product</button>
                 <button type="submit" class="orange-btn">Complete Sale</button>
             </form>
             <?php if (isset($_SESSION['receipt_data'])): ?>
@@ -262,6 +263,7 @@ try {
                             </tbody>
                         </table>
                         <p><strong>Grand Total: Ksh <?php echo number_format($_SESSION['receipt_data']['grand_total'], 2); ?></strong></p>
+                        <button class="receipt-btn" onclick="downloadPDF()">Download PDF</button>
                         <button class="receipt-btn" onclick="printReceipt()">Print</button>
                         <button class="receipt-btn" onclick="closeReceipt()">Close</button>
                     </div>
@@ -410,13 +412,20 @@ try {
             });
         }
 
-        // Clear success message on search bar click
-        document.getElementById('product-search').addEventListener('click', function() {
+        // Clear success message and receipt button on search bar or add product click
+        function clearMessagesAndReceipt() {
             const successMessage = document.querySelector('p.success');
+            const receiptButton = document.querySelector('.receipt-btn');
             if (successMessage) {
                 successMessage.remove();
             }
-        });
+            if (receiptButton) {
+                receiptButton.remove();
+            }
+        }
+
+        document.getElementById('product-search').addEventListener('click', clearMessagesAndReceipt);
+        document.querySelector('.add-product-btn').addEventListener('click', clearMessagesAndReceipt);
 
         // Receipt functions
         function showReceipt() {
@@ -431,6 +440,53 @@ try {
 
         function printReceipt() {
             window.print();
+        }
+
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const receiptContent = document.querySelector('.receipt-content');
+            
+            // Header
+            doc.setFontSize(16);
+            doc.text('POS System Receipt', 20, 20);
+            doc.setFontSize(12);
+            doc.text(`Transaction ID: ${receiptContent.querySelector('p:nth-child(2)').textContent.split(': ')[1]}`, 20, 30);
+            doc.text(`Date: ${receiptContent.querySelector('p:nth-child(3)').textContent.split(': ')[1]}`, 20, 40);
+
+            // Table headers
+            const headers = ['Product', 'Qty', 'Price (Ksh)', 'Total (Ksh)'];
+            let y = 50;
+            doc.setFillColor(245, 166, 35); // #f5a623
+            doc.rect(20, y, 170, 10, 'F');
+            doc.setTextColor(255, 255, 255);
+            headers.forEach((header, i) => {
+                doc.text(header, 20 + i * 42.5, y + 7);
+            });
+
+            // Table rows
+            doc.setTextColor(0, 0, 0);
+            const rows = receiptContent.querySelectorAll('tbody tr');
+            y += 10;
+            rows.forEach((row, index) => {
+                const cells = row.querySelectorAll('td');
+                doc.rect(20, y, 170, 10);
+                doc.text(cells[0].textContent, 20, y + 7);
+                doc.text(cells[1].textContent, 62.5, y + 7);
+                doc.text(cells[2].textContent, 105, y + 7);
+                doc.text(cells[3].textContent, 147.5, y + 7);
+                y += 10;
+            });
+
+            // Grand Total
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text(`Grand Total: Ksh ${receiptContent.querySelector('p strong').textContent.split('Ksh ')[1]}`, 20, y + 10);
+            doc.setFont('helvetica', 'normal');
+
+            // Save PDF
+            const transactionId = receiptContent.querySelector('p:nth-child(2)').textContent.split(': ')[1];
+            doc.save(`receipt_${transactionId}.pdf`);
         }
     </script>
     <datalist id="product-list">
