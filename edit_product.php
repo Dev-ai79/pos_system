@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $stmt = $pdo->prepare("UPDATE products SET name = ?, price = ?, stock = ? WHERE id = ?");
             $stmt->execute([$name, $price, $stock, $product_id]);
+            $_SESSION['success'] = "Product updated successfully.";
             header('Location: inventory.php');
             exit;
         } catch (PDOException $e) {
