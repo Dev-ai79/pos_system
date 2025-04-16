@@ -6,7 +6,7 @@ body {
 }
 
 .orange-btn {
-    background-color: #FF6200;
+    background-color: #003153;
     color: white;
     padding: 12px 25px;
     border: none;
@@ -25,12 +25,12 @@ body {
 }
 
 .orange-btn:hover {
-    background-color: #CC5500;
+    background-color: #004171;
     color: white;
 }
 
 .orange-btn.active {
-    background-color: #CC5500;
+    background-color: #004171;
     color: white;
     font-weight: bold;
 }
@@ -65,7 +65,7 @@ body {
 }
 
 .login-box h2 {
-    color: #FF6200;
+    color: #003153;
     margin-bottom: 10px;
 }
 
@@ -96,7 +96,7 @@ body {
     width: 100%;
     max-width: 300px;
     padding: 12px;
-    background-color: #FF6200;
+    background-color: #003153;
     color: white;
     border: none;
     border-radius: 8px;
@@ -105,7 +105,7 @@ body {
 }
 
 .login-form .orange-btn:hover {
-    background-color: #CC5500;
+    background-color: #004171;
     color: white;
 }
 
@@ -157,17 +157,57 @@ body {
 /* Sidebar */
 .sidebar {
     width: 250px;
-    background: #ffffff;
+    background: #003153;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     margin: 0;
     order: 1;
     transition: all 0.3s ease;
+    color: white;
+    position: fixed;
+    top: 0;
+    height: 100vh;
 }
 
-.sidebar h3 {
-    color: #FF6200;
+.sidebar h2 {
+    color: white;
     margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.sidebar .user-details {
+    color: #e3dac9;
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #004171;
+}
+
+.sidebar ul li a i {
+    margin-right: 10px;
 }
 
 /* Search Container */
@@ -228,7 +268,7 @@ body {
 .hamburger {
     display: none;
     font-size: 24px;
-    color: #FF6200;
+    color: #003153;
     cursor: pointer;
     margin: 15px;
 }
@@ -250,7 +290,7 @@ body {
 
 .icon-btn {
     display: block;
-    color: #FF6200;
+    color: #003153;
     font-size: 20px;
     margin: 20px auto;
     text-decoration: none;
@@ -258,11 +298,11 @@ body {
 }
 
 .icon-btn:hover {
-    color: #CC5500;
+    color: #004171;
 }
 
 .icon-btn.active {
-    color: #CC5500;
+    color: #004171;
 }
 
 /* Main Content */
@@ -310,7 +350,7 @@ th, td {
 }
 
 th {
-    background-color: #FF6200;
+    background-color: #003153;
     color: white;
 }
 
@@ -326,7 +366,7 @@ tr:hover {
 }
 
 .main-content #product-table th {
-    background-color: #FF6200 !important;
+    background-color: #003153 !important;
     color: white;
     padding: 12px;
     text-align: left;
@@ -362,7 +402,7 @@ tr:hover {
 .receipt-box {
     background: #fff;
     padding: 20px;
-    border: 2px dashed #FF6200;
+    border: 2px dashed #003153;
     border-radius: 8px;
     margin-top: 30px;
     max-width: 400px;
@@ -371,7 +411,7 @@ tr:hover {
 }
 
 .receipt-box h2 {
-    color: #FF6200;
+    color: #003153;
     margin-bottom: 15px;
 }
 
@@ -498,12 +538,16 @@ tr:hover {
     }
 
     .sidebar {
-        display: none;
         position: fixed;
         top: 0;
-        left: 0;
-        height: 100%;
+        left: -250px;
+        height: 100vh;
         z-index: 1000;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.active {
+        left: 0;
     }
 
     .sidebar-icons {
@@ -536,10 +580,12 @@ tr:hover {
     }
 
     .sidebar {
-        display: block;
+        position: fixed;
+        left: 0;
+        height: 100vh;
     }
 
     .main-content {
-        margin-left: 50px;
+        margin-left: 270px;
     }
 }
