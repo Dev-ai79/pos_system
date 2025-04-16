@@ -37,21 +37,31 @@ try {
     if ($period === 'daily') {
         $query .= " WHERE DATE(s.timestamp) = CURDATE()";
         $most_sold_query .= " WHERE DATE(s.timestamp) = CURDATE()";
-        $period_label = 'Daily Report - ' . date('Y-m-d');
+        $start = date('Y-m-d 00:00:00');
+        $end = date('Y-m-d 23:59:59');
+        $period_label = "Daily Report - " . date('Y-m-d') . " (00:00:00 to 23:59:59)";
+        error_log("reports.php: Daily report range - $start to $end");
     } elseif ($period === 'weekly') {
         $query .= " WHERE WEEK(s.timestamp, 1) = WEEK(CURDATE(), 1) AND YEAR(s.timestamp) = YEAR(CURDATE())";
         $most_sold_query .= " WHERE WEEK(s.timestamp, 1) = WEEK(CURDATE(), 1) AND YEAR(s.timestamp) = YEAR(CURDATE())";
         $start = date('Y-m-d', strtotime('monday this week'));
         $end = date('Y-m-d', strtotime('sunday this week'));
-        $period_label = "Weekly Report - $start to $end";
+        $period_label = "Weekly Report - $start to $end (Monday 00:00:00 to Sunday 23:59:59)";
+        error_log("reports.php: Weekly report range - $start 00:00:00 to $end 23:59:59");
     } elseif ($period === 'monthly') {
         $query .= " WHERE MONTH(s.timestamp) = MONTH(CURDATE()) AND YEAR(s.timestamp) = YEAR(CURDATE())";
         $most_sold_query .= " WHERE MONTH(s.timestamp) = MONTH(CURDATE()) AND YEAR(s.timestamp) = YEAR(CURDATE())";
-        $period_label = 'Monthly Report - ' . date('F Y');
+        $start = date('Y-m-01');
+        $end = date('Y-m-t');
+        $period_label = "Monthly Report - " . date('F Y') . " ($start 00:00:00 to $end 23:59:59)";
+        error_log("reports.php: Monthly report range - $start 00:00:00 to $end 23:59:59");
     } else { // yearly
         $query .= " WHERE YEAR(s.timestamp) = YEAR(CURDATE())";
         $most_sold_query .= " WHERE YEAR(s.timestamp) = YEAR(CURDATE())";
-        $period_label = 'Yearly Report - ' . date('Y');
+        $start = date('Y-01-01');
+        $end = date('Y-12-31');
+        $period_label = "Yearly Report - " . date('Y') . " ($start 00:00:00 to $end 23:59:59)";
+        error_log("reports.php: Yearly report range - $start 00:00:00 to $end 23:59:59");
     }
 
     $query .= " ORDER BY s.timestamp DESC";
@@ -108,18 +118,17 @@ try {
         }
         .report-buttons button {
             padding: 10px 20px;
-            background-color: #f5a623;
+            background-color: #2a2f43;
             color: white;
             border: none;
             cursor: pointer;
             font-size: 16px;
             border-radius: 5px;
         }
-        .report-buttons button:hover {
-            background-color: #d48f1e;
+        .report-buttons button:hover, .report-buttons button.active {
+            background-color: #3e4563;
         }
         .report-buttons button.active {
-            background-color: #d48f1e;
             font-weight: bold;
         }
         .report-content {
@@ -136,7 +145,7 @@ try {
             text-align: left;
         }
         .report-table th {
-            background-color: #f5a623;
+            background-color: #2a2f43;
             color: white;
             font-weight: bold;
         }
@@ -165,12 +174,12 @@ try {
             font-size: 16px;
         }
         .summary strong {
-            color: #f5a623;
+            color: #2a2f43;
         }
         .no-data {
             text-align: center;
             padding: 20px;
-            border: 2px solid #f5a623;
+            border: 2px solid #2a2f43;
             border-radius: 5px;
             background-color: #fff;
             color: #333;
